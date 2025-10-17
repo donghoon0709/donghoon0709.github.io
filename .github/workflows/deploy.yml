@@ -1,0 +1,48 @@
+name: Deploy Eleventy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write        # GitHub Pages에 올리기 위해 필요
+  id-token: write     # Pages 배포 토큰
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      # Eleventy 빌드 (scripts.build 가 eleventy 실행하도록 이미 설정되어 있다면 이 줄로 대체)
+      - run: npm run build
+
+      # Jekyll 처리 방지(.nojekyll) - 언더스코어 파일/폴더를 안전하게 서빙
+      - run: touch _site/.nojekyll
+
+      # 결과 업로드
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
