@@ -1,0 +1,13 @@
+---
+layout: layouts/base.njk
+title: Tags
+permalink: /tags/
+---
+<h2>Tags</h2>
+<ul>
+  {% for tag, items in collections %}
+    {% if tag != "all" and tag != "posts" %}
+      <li><a href="/tags/{{ tag }}/">#{{ tag }}</a> ({{ items | length }})</li>
+    {% endif %}
+  {% endfor %}
+</ul>

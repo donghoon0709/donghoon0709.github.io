@@ -1,0 +1,65 @@
+---
+layout: layouts/base.njk
+title: 홈
+---
+
+{% block extra_head %}
+  <link rel="stylesheet" href="/styles/index.css">
+{% endblock %}
+
+{# 1) 관심사 버튼(히어로 섹션) #}
+<section class="hero-interests">
+  <h2 class="visually-hidden">관심사</h2>
+
+  <div class="orbit tilt-root">
+    <div class="orbit-core">
+        <strong>My Interests</strong>
+    </div>
+
+    <ul class="orbit-ring" style="--count: {{ interests | length }}">
+      {% for item in interests %}
+        <li class="orbit-item" style="--i: {{ loop.index0 }}">
+            <span class="orbit-rotator">
+              <a class="orbit-iconlink tilt"
+                href="/tags/{{ item.tag }}/"
+                aria-label="{{ item.label }} 글 보기"
+                data-tilt-max="25"
+                data-tilt-scale="1.45">
+                  {% include "icons/" + item.icon %}
+                  <span class="visually-hidden">{{ item.label }}</span>
+              </a>
+            </span>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+{# 2) 최신 글(관심사 무관) #}
+<section class="recent-posts">
+  <h2>최근 글</h2>
+  {% set recent = collections.posts | head(8) %}
+  <ul class="post-list">
+    {% for post in recent %}
+      <li class="post-item">
+        <a class="post-link" href="{{ post.url }}">
+          <span class="post-title">{{ post.data.title }}</span>
+        </a>
+        {% if post.date %}
+          <time class="post-date" datetime="{{ post.date | dateISO }}">{{ post.date | dateISO }}</time>
+        {% endif %}
+        {% if post.data.description %}
+          <p class="post-desc">{{ post.data.description }}</p>
+        {% endif %}
+        {% if post.data.tags %}
+          <div class="post-tags">
+            {% for t in post.data.tags %}
+              <a href="/tags/{{ t }}/" class="tag">#{{ t }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+  <p class="archive-link"><a href="/tags/">모든 태그 보기</a></p>
+</section>

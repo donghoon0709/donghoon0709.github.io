@@ -1,0 +1,23 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: collections
+  size: 1
+  alias: tagPair
+  filter:
+    - all
+    - posts
+  addAllPagesToCollections: false
+permalink: "/tags/{{ tagPair[0] }}/"
+eleventyComputed:
+  title: "Tag: {{ tagPair[0] }}"
+---
+<h2>#{{ tagPair[0] }}</h2>
+<ul>
+  {% for item in tagPair[1] | reverse %}
+    <li>
+      <a href="{{ item.url }}">{{ item.data.title }}</a>
+      <small>— {{ item.date | dateISO }}</small>
+    </li>
+  {% endfor %}
+</ul>

@@ -1,0 +1,6 @@
+[
+  { "key": "programming", "label": "프로그래밍", "tag": "dev",         "icon": "programming.svg" },
+  { "key": "music",       "label": "음악",       "tag": "music",       "icon": "music.svg" },
+  { "key": "literature",  "label": "문학",       "tag": "literature",  "icon": "literature.svg" },
+  { "key": "game",        "label": "게임",       "tag": "game",        "icon": "game.svg" }
+]

@@ -1,0 +1,10 @@
+{
+  "title": "나의 11ty 블로그",
+  "description": "Eleventy로 만드는 심플 블로그",
+  "url": "https://donghoon0709.github.io",
+  "language": "ko",
+  "author": {
+    "name": "Your Name",
+    "email": "you@example.com"
+  }
+}

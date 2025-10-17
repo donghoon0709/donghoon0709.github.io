@@ -1,0 +1,158 @@
+body { max-width: 720px; margin: 2rem auto; line-height: 1.6; font-family: system-ui, sans-serif; }
+header, footer { display:flex; justify-content:space-between; align-items:center; gap:1rem; }
+a { text-decoration: none; }
+nav a { margin-right: 1rem; }
+ul { padding-left: 1.2rem; }
+code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* 히어로 관심사 */
+.hero-interests {
+    margin: 2.5rem 0;
+}
+
+.orbit {
+  position: relative;
+  width: min(78vmin, 680px);
+  height: min(78vmin, 680px);
+  margin: 0 auto;
+}
+
+/* 중앙 원 */
+.orbit-core {
+  position: absolute; inset: 0;
+  margin: auto;
+  width: min(24vmin, 220px);
+  height: min(24vmin, 220px);
+  border-radius: 9999px;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  background: radial-gradient(circle at 35% 35%, #fff, #f7f7f7);
+  border: 1px solid #e9e9e9;
+  box-shadow: 0 10px 30px rgba(0,0,0,.06) inset, 0 2px 10px rgba(0,0,0,.05);
+  font-weight: 800;
+}
+
+/* 회전 링 */
+.orbit-ring {
+  --radius: clamp(140px, 34vmin, 280px);
+  position: absolute; 
+  inset: 0;
+  width: 100%; height: 100%;
+  margin: 0; padding: 0; list-style: none;
+  animation: orbit-spin 40s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+/* 각 아이템을 원 둘레에 배치 */
+.orbit-item {
+  position: absolute; top: 50%; left: 50%;
+  transform-origin: 50% 50%;
+  transform:
+    translate(-50%, -50%)
+    rotate(calc(var(--i) * 1turn / var(--count)))
+    translateY(calc(-1 * var(--radius)))
+    rotate(calc(-1 * var(--i) * 1turn / var(--count)));
+}
+
+/* SVG만 보이는 얇은 링크 */
+.orbit-iconlink {
+  /* 배경/테두리/그림자 없음 */
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+
+  /* 크기 제어: 아이콘 사이즈만 변수로 관리 */
+  --icon-size: 100px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-size);
+  height: var(--icon-size);
+
+  transform-style: preserve-3d;
+  transition: transform .12s ease, filter .12s ease;
+  will-change: transform, filter;
+}
+
+/* 인라인 SVG 크기 */
+.orbit-iconlink svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.orbit-iconlink:focus-visible {
+  outline: 1px solid #3b82f6;
+  outline-offset: 4px;
+}
+
+.orbit-rotator {
+    display: inline-block;
+    animation: orbit-spin-reverse 40s linear infinite;
+}
+
+/* 호버 및 포커스 시 애니메이션 일시정지 */
+.orbit:has(.orbit-iconlink:hover) .orbit-ring,
+.orbit:has(.orbit-iconlink:focus-visible) .orbit-ring,
+.orbit:has(.orbit-iconlink:hover) .orbit-rotator,
+.orbit:has(.orbit-iconlink:focus-visible) .orbit-rotator {
+    animation-play-state: paused;
+}
+
+.tilt-root {
+    perspective: 800px;
+}
+
+.tilt {
+    transform-style: preserve-3d;
+    transition: transform .12s ease, filter .12s ease;
+    will-change: transform, filter;
+}
+
+.tilt svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+
+/* 전체 링 회전 */
+@keyframes orbit-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes orbit-spin-reverse {
+  to { transform: rotate(-360deg); }
+}
+
+/* 작은 화면에서 반지름/크기 보정 */
+@media (max-width: 520px) {
+  .orbit-ring { --radius: clamp(110px, 30vmin, 220px); }
+  .orbit-rotator { min-width: 84px; padding: .55rem .8rem; font-weight: 700; }
+  .orbit-center { width: min(28vmin, 200px); height: min(28vmin, 200px); }
+}
+
+/* 모션 민감 사용자 배려 */
+@media (prefers-reduced-motion: reduce) {
+  .orbit-ring { animation: none; }
+  .orbit-rotator { animation: none; }
+}
+
+/* 최신 글 */
+.recent-posts { margin: 3rem 0; }
+.post-list { list-style: none; padding: 0; margin: 0; }
+.post-item { padding: 1rem 0; border-bottom: 1px solid #eee; }
+.post-link { text-decoration: none; }
+.post-title { font-weight: 700; }
+.post-date { display: inline-block; margin-left: .5rem; color: #666; font-size: .9rem; }
+.post-desc { margin: .5rem 0 0; color: #333; }
+.post-tags { margin-top: .5rem; }
+.tag { margin-right: .5rem; font-size: .9rem; color: #555; text-decoration: none; }
+.tag:hover { text-decoration: underline; }
+.archive-link { margin-top: 1rem; }
