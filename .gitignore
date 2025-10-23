@@ -9,7 +9,6 @@ Icon
 
 
 # Thumbnails
-._*
 
 # Files that might appear in the root of a volume
 .DocumentRevisions-V100
@@ -30,3 +29,5 @@ Temporary Items
 ### macOS Patch ###
 # iCloud generated files
 *.icloud
+
+_site
